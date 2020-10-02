@@ -29,9 +29,8 @@ def live_search(request, template_name="shop/livesearch_results.html"):
     q = request.GET.get("q", "")
     if not q:
         return HttpResponse("Empty request")
-    else:
-        products = Product.objects.filter(Q(sku__icontains=q) |
-                                          Q(description__icontains=q) |
-                                          Q(name__icontains=q))
-        qs_json = serializers.serialize('json', products)
-        return HttpResponse(qs_json)
+    products = Product.objects.filter(Q(sku__icontains=q) |
+                                      Q(description__icontains=q) |
+                                      Q(name__icontains=q))
+    qs_json = serializers.serialize('json', products)
+    return HttpResponse(qs_json)
